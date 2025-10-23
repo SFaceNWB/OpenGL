@@ -95,7 +95,8 @@ int main(void)
         //ShaderProgramSource source = ParseShader("res/shaders/Basic.shader");
         //unsigned int shader = CreateShader(source.VertexSource, source.FragmentSource);
         //glUseProgram(shader);
-		shader.SetUniform4f("u_Color", 0.6f, 0.3f, 0.6f, 1.0f);
+        
+		//shader.SetUniform4f("u_Color", 0.6f, 0.3f, 0.6f, 1.0f);
         //GLCall(int location = glGetUniformLocation(shader, "u_Color"));
         //ASSERT(location != -1);
         //GLCall(glUniform4f(location, 0.6f, 0.3f, 0.6f, 1.0f));
@@ -127,7 +128,7 @@ int main(void)
 
             shader.Bind();
             //GLCall(glUseProgram(shader));
-			shader.SetUniform4f("u_Color", r, 0.3f, 0.6f, 1.0f);
+			//shader.SetUniform4f("u_Color", r, 0.3f, 0.6f, 1.0f);
             //GLCall(glUniform4f(location, r, 0.3f, 0.6f, 1.0f));
 
 			renderer.Draw(va, ib, shader);

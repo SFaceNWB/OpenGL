@@ -6,3 +6,9 @@
 **Vertex**指的不仅仅是顶点位置，同时包括纹理、法线、颜色、切线这些数据块。  
 ## P6OpenGL中的着色器工作原理
 **Shader**主要使用Vertex Shader和Fragment Shader(Pixel Shader),还有很多其他Shader。
+## P18OpenGL中的混合
+有src和dest两种颜色，采用RGBA。
+R = (R(src) * A(src)) + (R(dest) * (A(dest) - (1 - A(src)))  
+G = (G(src) * A(src)) + (G(dest) * (A(dest) - (1 - A(src)))     
+B = (B(src) * A(src)) + (B(dest) * (A(dest) - (1 - A(src)))     
+A = (A(src) * A(src)) + (A(dest) * (A(dest) - (1 - A(src)))      
