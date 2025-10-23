@@ -9,6 +9,7 @@
 #include "Renderer.h"
 
 #include "VertexBuffer.h"
+#include "vertexBufferLayout.h"
 #include "IndexBuffer.h"
 #include "VertexArray.h"
 #include "Shader.h"
@@ -59,9 +60,9 @@ int main(void)
             2, 3, 0
         };
 
-        unsigned int vertexArrayObject;
-        GLCall(glGenVertexArrays(1, &vertexArrayObject));
-        GLCall(glBindVertexArray(vertexArrayObject));
+        //unsigned int vertexArrayObject;
+        //GLCall(glGenVertexArrays(1, &vertexArrayObject));
+        //GLCall(glBindVertexArray(vertexArrayObject));
 
         VertexArray va;
         VertexBuffer vb(Positions, 4 * 2 * sizeof(float));
@@ -103,6 +104,8 @@ int main(void)
 		ib.Unbind();
         //GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0));
 
+		Renderer renderer;
+
         float r = 0.0f;
         float increment = 0.05f;
 
@@ -110,22 +113,16 @@ int main(void)
         while (!glfwWindowShouldClose(window))
         {
             /* Render here */
-            glClear(GL_COLOR_BUFFER_BIT);
+			renderer.Clear();
+            //GLCall(glClear(GL_COLOR_BUFFER_BIT));
 
             shader.Bind();
             //GLCall(glUseProgram(shader));
 			shader.SetUniform4f("u_Color", r, 0.3f, 0.6f, 1.0f);
             //GLCall(glUniform4f(location, r, 0.3f, 0.6f, 1.0f));
 
-            //GLCall(glBindBuffer(GL_ARRAY_BUFFER, buffer));
-            //GLCall(glEnableVertexAttribArray(0));
-            //GLCall(glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0));
-
-            va.Bind();
-            //GLCall(glBindVertexArray(vertexArrayObject));
-            ib.Bind();
-
-            GLCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr));
+			renderer.Draw(va, ib, shader);
+            //GLCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr));
 
             if (r > 1.0f)
                 increment = -0.05f;
