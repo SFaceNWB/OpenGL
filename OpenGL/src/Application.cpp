@@ -13,6 +13,7 @@
 #include "IndexBuffer.h"
 #include "VertexArray.h"
 #include "Shader.h"
+#include "Texture.h"
 
 int main(void)
 {
@@ -22,9 +23,9 @@ int main(void)
     if (!glfwInit())
         return -1;
     
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+	//glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+	//glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+	//glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     /* Create a windowed mode window and its OpenGL context */
     window = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
@@ -49,10 +50,10 @@ int main(void)
     {
 
         float Positions[] = {
-            -0.5f, -0.5f,
-             0.5f, -0.5f,
-             0.5f,  0.5f,
-            -0.5f,  0.5f,
+            -0.5f, -0.5f, 0.0f, 0.0f,
+			 0.5f, -0.5f, 1.0f, 0.0f,
+			 0.5f,  0.5f, 1.0f, 1.0f,
+			-0.5f,  0.5f, 0.0f, 1.0f
         };
 
         unsigned int indices[] = {
@@ -60,12 +61,15 @@ int main(void)
             2, 3, 0
         };
 
+		GLCall(glEnable(GL_BLEND));
+		GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
+
         //unsigned int vertexArrayObject;
         //GLCall(glGenVertexArrays(1, &vertexArrayObject));
         //GLCall(glBindVertexArray(vertexArrayObject));
 
         VertexArray va;
-        VertexBuffer vb(Positions, 4 * 2 * sizeof(float));
+        VertexBuffer vb(Positions, 4 * 4 * sizeof(float));
         //unsigned int buffer; 
         //GLCall(glGenBuffers(1, &buffer));
         //GLCall(glBindBuffer(GL_ARRAY_BUFFER, buffer));
@@ -73,6 +77,7 @@ int main(void)
 
 		VertexBufferLayout layout;
 		layout.Push<float>(2);
+        layout.Push<float>(2);
         //GLCall(glEnableVertexAttribArray(0));
         //GLCall(glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0));
 		va.AddBuffer(vb, layout);
@@ -94,6 +99,10 @@ int main(void)
         //GLCall(int location = glGetUniformLocation(shader, "u_Color"));
         //ASSERT(location != -1);
         //GLCall(glUniform4f(location, 0.6f, 0.3f, 0.6f, 1.0f));
+
+		Texture texture("res/textures/SFaceNWB.png");
+		texture.Bind();
+		shader.SetUniform1i("u_Texture", 0);
 
         va.Unbind();
         //GLCall(glBindVertexArray(0));
