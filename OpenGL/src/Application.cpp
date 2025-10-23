@@ -15,6 +15,9 @@
 #include "Shader.h"
 #include "Texture.h"
 
+#include "glm/glm.hpp"
+#include "glm/gtc/matrix_transform.hpp"
+
 int main(void)
 {
     GLFWwindow* window;
@@ -82,24 +85,26 @@ int main(void)
         //GLCall(glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0));
 		va.AddBuffer(vb, layout);
 
-        
-
         IndexBuffer ib(indices, 6);
         //unsigned int indexBufferObject;
         //glGenBuffers(1, &indexBufferObject);
         //glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBufferObject);
         //glBufferData(GL_ELEMENT_ARRAY_BUFFER, 6 * sizeof(unsigned int), indices, GL_STATIC_DRAW);
 
+		//正交投影矩阵，左右上下近远边界
+		glm::mat4 proj = glm::ortho(-2.0f, 2.0f, -1.5f, 1.5f, -1.0f, 1.0f);
+        
         Shader shader("res/shaders/Basic.shader");
         shader.Bind();
         //ShaderProgramSource source = ParseShader("res/shaders/Basic.shader");
         //unsigned int shader = CreateShader(source.VertexSource, source.FragmentSource);
         //glUseProgram(shader);
         
-		//shader.SetUniform4f("u_Color", 0.6f, 0.3f, 0.6f, 1.0f);
+		shader.SetUniform4f("u_Color", 0.6f, 0.3f, 0.6f, 1.0f);
         //GLCall(int location = glGetUniformLocation(shader, "u_Color"));
         //ASSERT(location != -1);
         //GLCall(glUniform4f(location, 0.6f, 0.3f, 0.6f, 1.0f));
+		shader.SetUniformMat4f("u_MVP", proj);
 
 		Texture texture("res/textures/SFaceNWB.png");
 		texture.Bind();
