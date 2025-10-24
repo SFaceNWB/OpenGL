@@ -11,4 +11,8 @@
 R = (R(src) * A(src)) + (R(dest) * (A(dest) - (1 - A(src)))  
 G = (G(src) * A(src)) + (G(dest) * (A(dest) - (1 - A(src)))     
 B = (B(src) * A(src)) + (B(dest) * (A(dest) - (1 - A(src)))     
-A = (A(src) * A(src)) + (A(dest) * (A(dest) - (1 - A(src)))      
+A = (A(src) * A(src)) + (A(dest) * (A(dest) - (1 - A(src)))
+## P21
+(MVP)模型变换投影
+**view matrix**表示位置和方向  
+**model matrix**表示对象的变换  
